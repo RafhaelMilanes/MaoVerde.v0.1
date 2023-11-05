@@ -18,7 +18,7 @@ const Login = () => {
     >
       <View style={styles.container}>
         <Text style={styles.text}>Cide.</Text>
-        <Text style={styles.text}>Conserve.</Text>
+        <Text style={styles.text}>Cnserve.</Text>
         <Text style={styles.text}>Renove.</Text>
       </View>
 
