@@ -44,7 +44,7 @@ const ParticipacoesConfirmadas = () => {
             <Text style={{ fontSize: 20, color: 'white', marginLeft: 15 }}>Comfimações</Text>
           </View>
 
-          <TouchableOpacity style={styles.card} onPress={hanDetalhes}>
+          <TouchableOpacity style={card} onPress={hanDetalhes}>
             <Image style={styles.box3_1} source={require('../../../assets/Box3_Background.png')} />
             <View style={styles.box3_2}>
               <Text style={{ color: 'white', fontSize: 20, marginBottom: 5 }}>Prevenção de Incêndio</Text>
@@ -56,7 +56,7 @@ const ParticipacoesConfirmadas = () => {
             <Text style={{ fontSize: 20, color: 'white', marginLeft: 15 }}>Feedback</Text>
           </View>
 
-          <TouchableOpacity style={styles.card} onPress={hanFeedback}>
+          <TouchableOpacity style={card} onPress={hanFeedback}>
             <Image style={styles.box3_1} source={require('../../../assets/Box3_Background.png')} />
             <View style={styles.box3_2}>
               <Text style={{ color: 'white', fontSize: 20, marginBottom: 5 }}>Prevenção de Incêndio</Text>
@@ -95,22 +95,6 @@ const styles = StyleSheet.create({
   box2: {
     marginTop: 40,
     marginBottom: 10,
-  },
-  card: {
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginVertical: 10,
   },
   box3_1: {
     borderRadius: 10,
