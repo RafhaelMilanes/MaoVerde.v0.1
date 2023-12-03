@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import {
   View,
   SafeAreaView,
@@ -10,8 +11,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { ProjetContext } from "../../contexts/projet";
 
-const DetalhesConfirmados = () => {
+const DetalhesConfirmados = ({route}) => {
+  const {selecionado1, setSelecionado1} = useContext(ProjetContext)
+  const {item} = route.params
+  setSelecionado1(route.params)
+
   const navigation = useNavigation();
 
   const Detalhes1 = () => {
@@ -36,14 +42,14 @@ const DetalhesConfirmados = () => {
           </TouchableOpacity>
         </View>
 
-        <Text style={{ fontSize: 20, color: "white", marginTop: 50, marginLeft:35 }}>
-          Prevênção de Incêndio
+        <Text style={{ fontSize: 30, color: "white", marginTop: 50, marginLeft:35 }}>
+          {item.title}
         </Text>
 
         <View style={{ alignSelf: "center" }}>
           <ImageBackground
             style={styles.box2}
-            source={require("../../../assets/Box2.png")}
+            source={item.image2}
             resizeMode="contain"
           >
             <View style={styles.box2_1}>
