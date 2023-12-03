@@ -13,10 +13,11 @@ const ParticipacoesConfirmadas = () => {
   const { card, setCard } = useContext(CardContext);
 
   const {projetos, setProjetos} = useContext(ProjetContext)
+  const {selecionado1, setSelecionado1} = useContext(ProjetContext)
   const {item} = projetos
 
-  const hanDetalhes = () => {
-    navigation.navigate("DetalhesConfirmados");
+  const hanDetalhes = (item) => {
+    navigation.navigate("DetalhesConfirmados", {item});
   };
 
   const hanFeedback = () => {
@@ -27,11 +28,10 @@ const ParticipacoesConfirmadas = () => {
     navigation.navigate("Home");
   };
 
-
   const renderItem = ({item}) => {
     if (item.inscrito == true) {
       return (
-        <TouchableOpacity style={card} onPress={hanDetalhes}>
+        <TouchableOpacity style={card} onPress={() => hanDetalhes(item)}>
           <Image style={styles.box3_1} source={item.image} />
           <View style={styles.box3_2}>
             <Text style={{ color: 'white', fontSize: 20, marginBottom: 5 }}>{item.title}</Text>
@@ -58,7 +58,7 @@ const ParticipacoesConfirmadas = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <>
+      <ScrollView>
         <View style={{ padding: 10 }}>
           <View style={styles.box1}>
             <TouchableOpacity style={styles.box1_2}>
@@ -95,7 +95,7 @@ const ParticipacoesConfirmadas = () => {
             keyExtractor={(item) => item.id}
           />
         </View>
-      </>
+      </ScrollView>
     </SafeAreaView>
   );
 };
