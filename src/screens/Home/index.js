@@ -12,30 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import {AuthContext} from '../../contexts/auth'
-
-const data = [
-  {
-    id: "1",
-    title: "Combate Incêndio",
-    description:
-      "O CPCIF capacita operacionalmente os voluntarios e militares de outras instituições a desempenharem a função de combatente florestal, a fim de elevar a eficiência e a segurança das operações de prevenção e combate a incêndio florestal no bioma cerrado, bem como nos demais biomas do Brasil.O CPCIF é destinado à especialização de oficiais.",
-    image: require("../../../assets/queimada.jpg"),
-  },
-  {
-    id: "2",
-    title: "Reflorestamento",
-    description:
-      "O CPCIF capacita operacionalmente os voluntarios e militares de outras instituições a desempenharem a função de combatente florestal, a fim de elevar a eficiência e a segurança das operações de prevenção e combate a incêndio florestal no bioma cerrado, bem como nos demais biomas do Brasil.O CPCIF é destinado à especialização de oficiais.",
-    image: require("../../../assets/reflorestamento.jpg"),
-  },
-  {
-    id: "3",
-    title: "Educa Cerrado",
-    description:
-      "O CPCIF capacita operacionalmente os voluntarios e militares de outras instituições a desempenharem a função de combatente florestal, a fim de elevar a eficiência e a segurança das operações de prevenção e combate a incêndio florestal no bioma cerrado, bem como nos demais biomas do Brasil.O CPCIF é destinado à especialização de oficiais.",
-    image: require("../../../assets/educa.jpg"),
-  },
-];
+import {ProjetContext} from '../../contexts/projet'
 
 const data1 = [
   { id: "1", title: "Cerrado", image: require("../../../assets/cerrado.jpeg") },
@@ -53,6 +30,8 @@ const data1 = [
 ];
 
 const Login = () => {
+  const {projetos, setProjetos} = useContext(ProjetContext)
+
   const{user, username}=useContext(AuthContext)
 
   const navigation = useNavigation();
@@ -110,7 +89,7 @@ const Login = () => {
       <View style={styles.containerCard}>
         <FlatList
           style={styles.textCard}
-          data={data}
+          data={projetos}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           horizontal={true}

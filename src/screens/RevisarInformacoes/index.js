@@ -15,13 +15,37 @@ import { TouchableOpacity } from "react-native";
 import {} from "../DetalhesCard";
 
 import { FormContext } from "../../contexts/form";
+import { ProjetContext } from "../../contexts/projet";
 
 const FormParticipacao = () => {
+  const {projetos, setProjetos} = useContext(ProjetContext)
+  const {selecionado, setSelecionado} = useContext(ProjetContext)
+  const {item} = selecionado
+
+  function participar() {
+    const selectedItem = projetos.find(projetos => projetos.id === item.id);
+
+  // Manipular o item (exemplo: adicionar um prefixo ao nome)
+  if (selectedItem) {
+    selectedItem.inscrito = true;
+  }
+
+  // Função para salvar o item de volta na lista
+  const saveItemToList = () => {
+    setProjetos(prevList => {
+      const updatedList = prevList.map(projetos =>
+        projetos.id === item.id ? selectedItem : projetos
+      );
+      return updatedList;
+    });
+  }};
+
   const { user } = useContext(FormContext);
   const navigation = useNavigation("");
 
   const handleNavConfirmado = () => {
     navigation.navigate("Confirmado");
+    participar()
   };
   const handleNavBack = () => {
     navigation.navigate("FormParticipacao")
@@ -31,10 +55,9 @@ const FormParticipacao = () => {
       <ScrollView>
         <View style={styles.buttonPerfil}>
           <View style={{ justifyContent: "center" }}>
-            <Image source={require("../../../assets/capaParticipacao.png")} />
+            <Image source={item.image} style={{resizeMode : 'cover', height: 200}}/>
 
-            <Text style={styles.text}>Prevênção de </Text>
-            <Text style={styles.text}>Incêndio </Text>
+            <Text style={styles.text}>{item.title}</Text>
           </View>
         </View>
         <View style={styles.form}>
@@ -92,9 +115,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
-    fontSize: 50,
+    fontSize: 45,
     marginLeft: 14,
     fontWeight: "800",
+    maxWidth: 400
   },
   text1: {
     color: "#fff",

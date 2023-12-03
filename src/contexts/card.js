@@ -8,7 +8,8 @@ function CardProvider ({ children }) {
   const [card, setCard] = useState(StyleSheet.create({
     alignItems: "center",
     borderRadius: 40,
-    display: 'flex'
+    display: 'flex',
+    marginVertical: 20
   }))
 
   function click (card) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import { ProjetContext } from "../../contexts/projet";
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -105,10 +106,12 @@ function SettingsOrganizador() {
 }
 
 const DetalhesScreen = ({ route, navigation }) => {
+  const {selecionado, setSelecionado} = useContext(ProjetContext)
   const { item } = route.params;
 
   const handleParticipar = () => {
-    navigation.navigate("FormParticipacao", { eventId: item.id });
+    navigation.navigate("FormParticipacao");
+    setSelecionado(route.params)
   };
 
   return (
