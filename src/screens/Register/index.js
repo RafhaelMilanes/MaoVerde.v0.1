@@ -13,20 +13,35 @@ import { AuthContext } from "../../contexts/auth";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { auth } from "../../firebase.config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const validationSchema = yup.object().shape({
-  //username: yup.string().required("Campo obrigatório"),
   email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
   password: yup
     .string()
-    .min(6, "A senha deve conter pelo menos 6 digitos")
+    .min(6, "A senha deve conter pelo menos 6 dígitos")
     .required("Informe sua senha"),
 });
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [userMail, setUserMail] = useState("");
+  const [userPass, setUserPass] = useState("");
+
+  const userLogin = () => {
+    signInWithEmailAndPassword(auth, userMail, userPass)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert('Login Efetuado...');
+        console.log(user);
+        navigation.navigate("Home")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+  };
 
   const { signIn } = useContext(AuthContext);
   const navigation = useNavigation();
@@ -38,11 +53,6 @@ export default function Home() {
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
-
-  function handleNavRegister(data) {
-    const { email, password, username } = data;
-    signIn(email, password, username);
-  }
 
   const handNewUser = () => {
     navigation.navigate("New");
@@ -63,12 +73,11 @@ export default function Home() {
                   containerStyle={{ width: "80%" }}
                   style={{ color: "white" }}
                   placeholder="E-mail"
-                  value={value}
-                  onChangeText={onChange}
+                  value={userMail}
+                  onChangeText={setUserMail}
                 />
               )}
               name="email"
-              defaultValue={email}
             />
             {errors.email && (
               <Text style={{ color: "red" }}>{errors.email.message}</Text>
@@ -81,13 +90,12 @@ export default function Home() {
                   containerStyle={{ width: "80%" }}
                   style={{ color: "white" }}
                   placeholder="Senha"
-                  value={value}
-                  onChangeText={onChange}
+                  value={userPass}
+                  onChangeText={setUserPass}
                   secureTextEntry={true}
                 />
               )}
               name="password"
-              defaultValue={password}
             />
             {errors.password && (
               <Text style={{ color: "red" }}>{errors.password?.message}</Text>
@@ -109,7 +117,7 @@ export default function Home() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={handleSubmit(handleNavRegister)}
+              onPress={userLogin}
             />
             <Button
               title="Cadastrar"
