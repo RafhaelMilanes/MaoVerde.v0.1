@@ -3,17 +3,36 @@ import {View, SafeAreaView, StyleSheet, Image, Text, TouchableOpacity, ScrollVie
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
 import { CardContext } from '../../contexts/card';
+import { ProjetContext } from "../../contexts/projet";
 
 const DetalhesConfirmados1 = () => {
     const {card, setCard} = useContext(CardContext)
     const {click} = useContext(CardContext)
 
-    const navigation = useNavigation();
+    const {projetos, setProjetos} = useContext(ProjetContext)
+    const {selecionado1, setSelecionado1} = useContext(ProjetContext)
+    const {item} = selecionado1
 
-    const Cancelar = () => {
-      navigation.navigate("Cancelado");
-      click()
-    };
+    function cancelar() {
+        navigation.navigate("Cancelado");
+        const selectedItem = projetos.find(projetos => projetos.id === item.id);
+    
+      // Manipular o item (exemplo: adicionar um prefixo ao nome)
+      if (selectedItem) {
+        selectedItem.inscrito = false;
+      }
+    
+      // Função para salvar o item de volta na lista
+      const saveItemToList = () => {
+        setProjetos(prevList => {
+          const updatedList = prevList.map(projetos =>
+            projetos.id === item.id ? selectedItem : projetos
+          );
+          return updatedList;
+        });
+      }};
+    
+    const navigation = useNavigation();
 
     const handleGoBack = () => {
         navigation.goBack();
@@ -48,7 +67,7 @@ const DetalhesConfirmados1 = () => {
                     </View>
                 </View>
 {/*                 <TouchableOpacity style={{marginTop: 70}} onPress={() => Cancelar()}>*/}
-                <TouchableOpacity onPress={Cancelar}>
+                <TouchableOpacity onPress={cancelar}>
                     <View style={styles.botao}>
                         <Text style={{ color: 'white', margin:1}}>Cancelar Participação</Text>
                     </View>
