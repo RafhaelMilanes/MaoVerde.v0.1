@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,8 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native";
 import { FormContext } from "../../contexts/form";
+import { ProjetContext } from "../../contexts/projet";
 
-const FormParticipacao = () => {
+const FormParticipacao = ({ route }) => {
+  const {selecionado, setSelecionado} = useContext(ProjetContext)
+  const {projetos, setProjetos} = useContext(ProjetContext)
+  const {item} = selecionado
+
   const [nome, setNome] = useState("");
   const [tel, setTel] = useState("");
   const [doc, setDoc] = useState("");
@@ -82,17 +87,17 @@ const FormParticipacao = () => {
 
     Cadastro(nome, tel, doc, endereco);
     navigation.navigate("RevisaoInformacao");
+
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.buttonPerfil}>
-          <View style={{ justifyContent: "center" }}>
-            <Image source={require("../../../assets/capaParticipacao.png")} />
+          <View style={{ justifyContent: "center"}}>
+            <Image source={item.image} style={{resizeMode : 'cover', height: 200}}/>
 
-            <Text style={styles.text}>Prevênção de </Text>
-            <Text style={styles.text}>Incêndio </Text>
+            <Text style={styles.text}>{item.title}</Text>
           </View>
         </View>
         <View style={styles.form}>
@@ -175,9 +180,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
-    fontSize: 50,
+    fontSize: 45,
     marginLeft: 14,
     fontWeight: "800",
+    maxWidth: 400
   },
   text1: {
     color: "#fff",
